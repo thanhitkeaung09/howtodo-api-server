@@ -195,13 +195,14 @@ class PostService
 
     public function postDetail($type)
     {
-        $post = Post::with(['admin', 'category', 'usersSave', 'likes'])->withCount(['postRead', 'likes', 'usersShare'])->find($type);
+        $post = Post::with(['admin', 'category', 'usersSave', 'likes','comments'])->withCount(['postRead', 'likes', 'usersShare','comments'])->find($type);
+        // return $post;
         if ($post->usersSave->where("id", \auth()->id())->count()) {
             $post->is_save = true;
         } else {
             $post->is_save = false;
         }
-        unset($post->usersSave, $post->commenst);
+        unset($post->usersSave, $post->comments);
         $post->is_like = false;
 
         foreach ($post->likes as $like) {

@@ -221,6 +221,8 @@ class PostService
 
         $comments = Comment::with(['likes', 'users'])->withCount('likes')->where('post_id', $type)->paginate(10);
         foreach ($comments as $comment) {
+              $timestamp = Carbon::parse($comment->created_at)->diffForHumans();
+              $comment->time = str_replace(' ago', '', $timestamp);
             $comment->count = $comment->likes_count;
             $comment->is_like = $comment->likes->where("user_id", \auth()->id())->count() > 0;
             unset($comment->likes_count);

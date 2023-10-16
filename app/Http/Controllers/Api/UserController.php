@@ -38,7 +38,7 @@ class UserController extends Controller
 
     public function updateUserImage($user_id,$profile_image)
     {
-        $user = User::find($user_id);
+         $user = auth()->user();
         $this->checkOwner($user);
         return new ApiSuccessResponse(
             data: $this->userService->updateUserImage(

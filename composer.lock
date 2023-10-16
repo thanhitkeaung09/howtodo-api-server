@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1c15585a379937dcc6652695d5d40467",
+    "content-hash": "ffa994db5abc3f510fa181b1cbdc67c7",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -2143,16 +2143,16 @@
         },
         {
             "name": "kreait/laravel-firebase",
-            "version": "5.2.0",
+            "version": "5.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kreait/laravel-firebase.git",
-                "reference": "210bc5488963462265c90fa2df8494a009089500"
+                "reference": "a17491f089cd6f2a628ef0c104e2de077b3c08b2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kreait/laravel-firebase/zipball/210bc5488963462265c90fa2df8494a009089500",
-                "reference": "210bc5488963462265c90fa2df8494a009089500",
+                "url": "https://api.github.com/repos/kreait/laravel-firebase/zipball/a17491f089cd6f2a628ef0c104e2de077b3c08b2",
+                "reference": "a17491f089cd6f2a628ef0c104e2de077b3c08b2",
                 "shasum": ""
             },
             "require": {
@@ -2163,9 +2163,9 @@
                 "symfony/cache": "^6.1.2"
             },
             "require-dev": {
+                "laravel/pint": "^1.13",
                 "orchestra/testbench": "^7.0 || ^8.0",
-                "phpunit/phpunit": "^9.6",
-                "symplify/easy-coding-standard": "^11.1"
+                "phpunit/phpunit": "^9.6"
             },
             "type": "library",
             "extra": {
@@ -2205,7 +2205,7 @@
             ],
             "support": {
                 "issues": "https://github.com/kreait/laravel-firebase/issues",
-                "source": "https://github.com/kreait/laravel-firebase/tree/5.2.0"
+                "source": "https://github.com/kreait/laravel-firebase/tree/5.4.0"
             },
             "funding": [
                 {
@@ -2213,7 +2213,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-03-30T11:24:10+00:00"
+            "time": "2023-10-05T21:49:15+00:00"
         },
         {
             "name": "laravel/framework",
@@ -11317,5 +11317,5 @@
         "php": "^8.0.2"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }

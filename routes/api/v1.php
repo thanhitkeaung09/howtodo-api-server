@@ -22,6 +22,7 @@ use App\Http\Controllers\OTPConfirmController;
 use App\Http\Controllers\OTPResendController;
 use App\Http\Controllers\WebSocketController;
 use App\Http\Controllers\AppleController;
+use App\Http\Controllers\FCMPostController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -78,6 +79,9 @@ Route::middleware('check.application.key')->prefix('email')->as(':email')->group
 )->name('apple:login');
 
 Route::middleware(['auth:sanctum', 'check.application.key'])->group(function () {
+    //send fcm token only to authenticated user
+    Route::post('/fcm_token', [FCMPostController::class, 'save_token'] )->name('fcm:post');
+
     //Account Delete
     Route::delete('auth/user/delete', [AuthController::class, 'delete'])->name('user:delete');
     //Logout

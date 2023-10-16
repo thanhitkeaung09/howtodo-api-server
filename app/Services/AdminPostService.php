@@ -8,7 +8,7 @@ use App\Models\Like;
 use App\Models\Post;
 use App\Models\User;
 use App\Services\FileStorage\FileStorageService;
-use App\Services\Firebase\FCMService;
+use App\Services\FCMService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 
@@ -16,22 +16,97 @@ class AdminPostService
 {
     public function __construct(
         private FileStorageService $fileStorageService,
+        public FCMService $fcmService
     ) {
     }
 
     public function create_post($request)
     {
+
+        if (is_null($request->cover_image)) {
+            $post = Post::create([
+                "admin_id" => $request->admin_id,
+                "user_id" => $request->user_id,
+                "category_id" => $request->category_id,
+                "cover_image" => null,
+                "article_title" => $request->article_title,
+                "body_text_image" => $request->body_text_image,
+                "short_words" => $request->short_words
+            ]);
+            //to start here
+            // FCMService::of
+        // $url = 'https://fcm.googleapis.com/fcm/send';
+        // $FcmToken = User::whereNotNull('device_token')->pluck('device_token')->all();
+
+        // $serverKey = 'AAAAluWOxJ8:APA91bHGJ0tPcdG1kclg6_hXfuNSbqq3pse6ynaooYSSf-jV_IHq7W3BoeTTL7YoZpPqFu4F-ewLmbNS6u0FH4Wets_HLiKPU0Isn1fkixp0SN3uRk8P9V-G0GPBLhF2kJzajgnK5Bcp';
+
+        // $data = [
+        //     "registration_ids" => $FcmToken,
+        //     "data" => [
+        //         "title" => $request->article_title,
+        //         "body" => $request->short_words,
+        //     ],
+        // //     "payload" => [
+        // //         "Nick" => "Mario",
+        // //         "Room" => "Portuge"
+        // // ]
+        // ];
+        // // dd($data);
+        // $encodedData = json_encode($data);
+
+        // $headers = [
+        //     'Authorization:key=' . $serverKey,
+        //     'Content-Type: application/json',
+        // ];
+
+        // $ch = curl_init();
+
+        // curl_setopt($ch, CURLOPT_URL, $url);
+        // curl_setopt($ch, CURLOPT_POST, true);
+        // curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        // curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        // curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+        // // Disabling SSL Certificate support temporarly
+        // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        // curl_setopt($ch, CURLOPT_POSTFIELDS, $encodedData);
+        // // Execute post
+        // $result = curl_exec($ch);
+        // if ($result === FALSE) {
+        //     die('Curl failed: ' . curl_error($ch));
+        // }
+        // // Close connection
+        // curl_close($ch);
+        // // FCM response
+        // // dd($result);
+
+            return $post;
+        } else {
+            $post = Post::create([
+                "admin_id" => $request->admin_id,
+                "user_id" => $request->user_id,
+                "category_id" => $request->category_id,
+                "cover_image" => $this->fileStorageService->upload(\config('filesystems.folders.profiles'), $request->cover_image),
+                "article_title" => $request->article_title,
+                "body_text_image" => $request->body_text_image,
+                "short_words" => $request->short_words
+            ]);
+
         $url = 'https://fcm.googleapis.com/fcm/send';
         $FcmToken = User::whereNotNull('device_token')->pluck('device_token')->all();
 
-        $serverKey = 'AAAAqvUgKEk:APA91bERMVD4kBYlmZUPGJSnI4PachyGnrP49cvVFUtcrxpaL83S9z4J0lQkEIuc4wTkLYgvUS9nxZkW2s0L_dROdIOZgvBSRgPy8PdSQszojziJ7Xp6gk1abnk2YjqY3CbB8MDQ2MPC';
+        $serverKey = 'AAAAluWOxJ8:APA91bHGJ0tPcdG1kclg6_hXfuNSbqq3pse6ynaooYSSf-jV_IHq7W3BoeTTL7YoZpPqFu4F-ewLmbNS6u0FH4Wets_HLiKPU0Isn1fkixp0SN3uRk8P9V-G0GPBLhF2kJzajgnK5Bcp';
 
         $data = [
             "registration_ids" => $FcmToken,
-            "notification" => [
+            "data" => [
                 "title" => $request->article_title,
                 "body" => $request->short_words,
-            ]
+            ],
+        //     "payload" => [
+        //         "Nick" => "Mario",
+        //         "Room" => "Portuge"
+        // ]
         ];
         // dd($data);
         $encodedData = json_encode($data);
@@ -61,27 +136,7 @@ class AdminPostService
         curl_close($ch);
         // FCM response
         // dd($result);
-
-        if (is_null($request->cover_image)) {
-            return Post::create([
-                "admin_id" => $request->admin_id,
-                "user_id" => $request->user_id,
-                "category_id" => $request->category_id,
-                "cover_image" => null,
-                "article_title" => $request->article_title,
-                "body_text_image" => $request->body_text_image,
-                "short_words" => $request->short_words
-            ]);
-        } else {
-            return Post::create([
-                "admin_id" => $request->admin_id,
-                "user_id" => $request->user_id,
-                "category_id" => $request->category_id,
-                "cover_image" => $this->fileStorageService->upload(\config('filesystems.folders.profiles'), $request->cover_image),
-                "article_title" => $request->article_title,
-                "body_text_image" => $request->body_text_image,
-                "short_words" => $request->short_words
-            ]);
+            return $post;
         }
     }
 

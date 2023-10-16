@@ -26,22 +26,24 @@ class UserController extends Controller
         return new ApiSuccessResponse($this->userService->getProfile($request));
     }
 
-    public function updateUserName(UpdateUserNameRequest $request, User $user): ApiSuccessResponse
+    public function updateUserName(UpdateUserNameRequest $request)
     {
+        $user = auth()->user();
+        $this->updateUserImage($request->user_id,$request->profile_image);
         $this->checkOwner($user);
         return new ApiSuccessResponse(
             data: $this->userService->updateUserName($user, $request->validated('name'))
         );
     }
 
-    public function updateUserImage(UpdateUserImageRequest $request)
+    public function updateUserImage($user_id,$profile_image)
     {
-        $user = User::find($request->user_id);
+        $user = User::find($user_id);
         $this->checkOwner($user);
         return new ApiSuccessResponse(
             data: $this->userService->updateUserImage(
                 user: $user,
-                newImage: $request->validated('profile_image'),
+                newImage: $profile_image,
             )
         );
     }

@@ -219,7 +219,7 @@ class PostService
     {
         $comments_count = Comment::with(['likes', 'users'])->withCount('likes')->where('post_id', $type)->get();
 
-        $comments = Comment::with(['likes', 'users'])->withCount('likes')->where('post_id', $type)->paginate(10);
+        $comments = Comment::with(['likes', 'users'])->withCount('likes')->where('post_id', $type)->get();
         foreach ($comments as $comment) {
               $timestamp = Carbon::parse($comment->created_at)->diffForHumans();
               $comment->time = str_replace(' ago', '', $timestamp);
@@ -231,7 +231,7 @@ class PostService
         return [
             "comment_total" => $comments_count->count(),
             "post_id" => intval($type),
-            "comments" => $comments->getCollection()
+            "comments" => $comments
         ];
     }
 

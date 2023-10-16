@@ -82,7 +82,7 @@ Route::middleware(['auth:sanctum', 'check.application.key'])->group(function () 
     //User Profile
     Route::get('/user/profile/detail', [UserController::class, 'profile'])->name('user:get:profile');
     //Update User Name
-    Route::patch('/user/{user}/name', [UserController::class, 'updateUserName'])->name("user:update:name");
+    Route::post('/user/update/name&img', [UserController::class, 'updateUserName'])->name("user:update:name");
     //Update User Image
     Route::post('/user/image', [UserController::class, 'updateUserImage'])->name('user:update:image');
     //Update Language

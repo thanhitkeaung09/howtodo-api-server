@@ -21,6 +21,7 @@ use App\Http\Controllers\ForgetPasswordController;
 use App\Http\Controllers\OTPConfirmController;
 use App\Http\Controllers\OTPResendController;
 use App\Http\Controllers\WebSocketController;
+use App\Http\Controllers\AppleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -67,6 +68,14 @@ Route::middleware('check.application.key')->prefix('email')->as(':email')->group
         action: ForgetPasswordController::class
     )->name('password:forget');
 })->name('emails:login');
+
+    /**
+     * Apple Login
+     */
+    Route::post(
+    uri: "/user/apple/login",
+    action: AppleController::class
+)->name('apple:login');
 
 Route::middleware(['auth:sanctum', 'check.application.key'])->group(function () {
     //Account Delete

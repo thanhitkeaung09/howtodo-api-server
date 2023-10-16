@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Dto\UserData;
+use Illuminate\Support\Carbon;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\UserResponseResource;
 use App\Http\Responses\ApiSuccessResponse;
@@ -68,6 +69,10 @@ class AuthService
     public function user_delete()
     {
         //need to delete rest
+        $now = Carbon::now();
+        $user = auth()->user();
+        $user->social_id = $user->social_id."_".$now;
+        $user->update();
         Auth::user()->categories()->delete();
         auth()->user()->delete();
         return new ApiSuccessResponse('Account Deleted Successfully');

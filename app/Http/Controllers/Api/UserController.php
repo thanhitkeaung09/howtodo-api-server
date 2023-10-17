@@ -29,7 +29,9 @@ class UserController extends Controller
     public function updateUserName(UpdateUserNameRequest $request)
     {
         $user = auth()->user();
-        $this->updateUserImage($request->user_id,$request->profile_image);
+        if($request->profile_image){
+            $this->updateUserImage($request->user_id,$request->profile_image);
+        }
         $this->checkOwner($user);
         return new ApiSuccessResponse(
             data: $this->userService->updateUserName($user, $request->validated('name'))

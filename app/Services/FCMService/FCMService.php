@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Services\Firebase;
+namespace App\Services\FCMService;
 
 use Exception;
 use Illuminate\Support\Facades\Log;
@@ -10,7 +10,8 @@ use Kreait\Firebase\Contract\Messaging as ContractMessaging;
 use Kreait\Firebase\Messaging\CloudMessage;
 use Kreait\Firebase\Messaging\Notification;
 
-final class FirebaseMessaging implements Messaging
+
+final class FCMService
 {
     private ContractMessaging $messaging;
 
@@ -18,7 +19,7 @@ final class FirebaseMessaging implements Messaging
 
     private array|string $tokens = [];
 
-    public function __construct(string|array $tokens)
+    public function  __construct(string|array $tokens)
     {
         $this->messaging = app('firebase.messaging');
 

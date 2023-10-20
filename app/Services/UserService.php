@@ -165,7 +165,7 @@ class UserService
         }
         //need to fix pusher account
 
-        // event(new LikeEvent(["id" => $post->id, "likes_count" => $post->likes()->count(), "type" => "post_like"]));
+        event(new LikeEvent(["id" => $post->id, "likes_count" => $post->likes()->count(), "type" => "post_like"]));
         return $status;
     }
 

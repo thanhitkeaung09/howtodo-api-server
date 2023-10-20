@@ -18,7 +18,7 @@ class NotificationService
         $posts = Post::with('postRead')
             ->whereIn("admin_id", $admins)
             ->latest()
-            ->paginate(10);
+            ->get();
         foreach ($posts as $post) {
             if ($post->postRead->count() > 0) {
                 $post->is_read = true;

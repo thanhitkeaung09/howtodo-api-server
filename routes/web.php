@@ -35,7 +35,7 @@ Route::get("/websockets",function() {
 });
 
 Route::get('/user/like/list', function(){
-        event(new LikeEvent(Post::find(3)));
+        event(new LikeEvent([Post::find(76)]));
         return "hello";
 })->name('user:post:like');
 

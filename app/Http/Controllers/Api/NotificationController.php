@@ -17,8 +17,8 @@ class NotificationController extends Controller
     {
     }
 
-    public function notiList():PaginatedResourceResponse
+    public function notiList()
     {
-        return new PaginatedResourceResponse($this->notificationService->notiList());
+        return new ApiSuccessResponse($this->notificationService->notiList());
     }
 }

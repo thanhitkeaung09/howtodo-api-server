@@ -21,7 +21,7 @@ class CommentEvent implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct(array $comment)
+    public function __construct($comment)
     {
         $this->comment = $comment;
     }

@@ -9,11 +9,13 @@ use App\Models\User;
 use App\Services\OTPService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Services\FileStorage\FileStorageService;
 
 class OTPConfirmController extends Controller
 {
     public function __construct(
-        private OTPService $oTPService
+        private OTPService $oTPService,
+        private FileStorageService $fileStorageService
     ) {
     }
     public function confirm(Request $request)
@@ -28,6 +30,10 @@ class OTPConfirmController extends Controller
             $user = new User();
             $user->name = $request->name;
             $user->email = $request->email;
+             $user->profile_image = $this->fileStorageService->put(
+                config('filesystems.folders.profiles'),
+                "https://icons.veryicon.com/png/o/miscellaneous/icon-icon-of-ai-intelligent-dispensing/login-user-name-1.png",
+            );
             if ($request->password === $request->confirm_password) {
                 $user->password = Hash::make($request->password);
             }

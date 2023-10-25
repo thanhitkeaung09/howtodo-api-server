@@ -76,6 +76,7 @@ class UserService
 
     public function updateUserImage(User $user, UploadedFile $newImage)
     {
+        // dd($user->getRawOriginal('profile_image'));
         $this->fileStorageService->delete($user->getRawOriginal('profile_image'));
 
         $path = $this->fileStorageService->upload(\config('filesystems.folders.profiles'), $newImage);
